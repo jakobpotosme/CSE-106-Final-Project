@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <title>Connect 4 </title>
+</head>
+
+<body>
+    <h1 id="room" data-room="<%= room %>">Room <%= room %> </h1>
+
+
+    <div class="game">
+        <div class="your_color"></div>
+        <div class="opponent_color"></div>
+        <div class="board">
+            <!-- <img src="{{img}}" class="overlay"> -->
+            <div class="cols">
+                <div class="col" id="col_1" data-in-col="0"></div>
+                <div class="col" id="col_2" data-in-col="0"></div>
+                <div class="col" id="col_3" data-in-col="0"></div>
+                <div class="col" id="col_4" data-in-col="0"></div>
+                <div class="col" id="col_5" data-in-col="0"></div>
+                <div class="col" id="col_6" data-in-col="0"></div>
+                <div class="col" id="col_7" data-in-col="0"></div>
+            </div>
+        </div>
+        <div class="status">Your turn!</div>
+    </div>
+
+    <div class="underlay hidden"></div>
+    <div class="popover hidden">
+        <h2>Waiting for opponent</h2>
+        <p>Give the url to a friend to play a game</p>
+        <input type="text" class="share_url" value="">
+    </div>
+
+    <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="/socket.io/socket.io.js" type="text/javascript"></script>
+    <!-- <script src="./js/script.js" type="text/javascript"></script> -->
+    <script src="../../js/script.js" type="text/javascript"></script>
+</body>
+
+</html>
