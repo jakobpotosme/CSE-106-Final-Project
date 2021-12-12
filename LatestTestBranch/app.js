@@ -1,13 +1,23 @@
+require("dotenv").config();
+require("./config/database").connect();
 const express = require('express');
+var bodyParser = require('body-parser')
+const mongoose = require('mongoose')
 const { emit } = require('process');
 var game_logic = require('./game_logic');
 const app = express()
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
+
+const User = require('./model/UserModel');
+const { db } = require("./model/UserModel");
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use(express.static(__dirname + '/public'));
 app.use("/js", express.static(__dirname + '/js'));
 app.set('view engine', 'ejs');
+
 
 // functions
 function getRandomInt() {
@@ -18,18 +28,112 @@ function getRandomInt() {
 
 var rooms = []
 
-app.get('/', (req, res) => {
+app.get('/home', (req, res) => {
   // res.send('Hello World!')
   num = getRandomInt()
 
   res.render('index',{num : num})
 })
 
+
+// Register
+
+app.get('/register', (req,res)=>{
+	
+	res.render('register')
+})
+
+
+
+app.post("/register", async  (req, res) => {
+// our register logic goes here...
+	// console.log(req.body.firstname)
+	// console.log(req.body.lastname)
+	// console.log(req.body.playername)
+	// console.log(req.body.password)
+	try{
+		//get user input
+		const {firstname,playername,password} = req.body
+		console.log(playername)
+		
+
+		// Validate user input
+		if (!(playername && password && firstname )) {
+		res.status(400).send("All input is required");
+		}
+
+		// check if user already exist
+		// Validate if user exist in our database
+		const oldUser = await User.findOne({ username: playername });
+		if (oldUser) {
+			return res.status(409).send("User Already Exist. Please Login");
+		}
+
+		// Create user in our database
+    const user = await User.create({
+		name: req.body.firstname,
+		username: req.body.playername, // sanitize
+		password: req.body.password,
+		});
+		// return new user
+    	 return res.redirect('/login')
+	} catch (err){
+		console.log(err)
+	}
+	
+
+});
+
+// Login
+
+app.get("/login", (req, res) => {
+
+	res.render('login')
+});
+
+
+app.post("/login", async (req, res) => {
+// our login logic goes here
+	try {
+		
+		const {playername, password} = req.body
+
+		if( !(playername && password)){
+			 res.status(400).send("All input is required");
+		}
+
+		 // Validate if user exist in our database
+    	const user = await User.findOne({ username: playername });
+		 // user
+      return res.redirect('/home');
+	}
+	catch (err){
+		console.log(err)
+		return res.status(400).send("Invalid Credentials");
+	}
+
+});
+
+
 app.get('/game/:room' , (req,res) =>{
   console.log("inside server Game: ", req.params.room)
   res.render('gamepage', {room : req.params.room})
 })
 
+app.get('/leaderboard', async (req,res) =>{
+	var users;
+	User.find({} , function(err, result){
+					if (err) {
+				console.log(err);
+				} else {
+				// users = result
+				// console.log(users)
+					// console.log(result)
+					res.render('leaderboard', {Users : result})
+				}
+		})
+
+})
 
 //Whenever someone connects this gets executed
 io.on('connection', function(socket) {
