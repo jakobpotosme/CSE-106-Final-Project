@@ -1,0 +1,23 @@
+{
+  "name": "cse-106-final-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jakobpotosme/CSE-106-Final-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": "17.2"
+  },
+  "bugs": {
+    "url": "https://github.com/jakobpotosme/CSE-106-Final-Project/issues"
+  },
+  "homepage": "https://github.com/jakobpotosme/CSE-106-Final-Project#readme"
+}
