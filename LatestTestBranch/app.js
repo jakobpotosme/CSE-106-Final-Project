@@ -28,11 +28,13 @@ function getRandomInt() {
 
 var rooms = []
 
-app.get('/home', (req, res) => {
+app.get('/home/:playername', (req, res) => {
   // res.send('Hello World!')
+//   console.log("here: "+req.params.playername)
+  username = req.params.playername
   num = getRandomInt()
 
-  res.render('index',{num : num})
+  res.render('index',{num : num, username: username})
 })
 
 
@@ -74,8 +76,11 @@ app.post("/register", async  (req, res) => {
 		name: req.body.firstname,
 		username: req.body.playername, // sanitize
 		password: req.body.password,
+		wins:0
 		});
 		// return new user
+    	// res.status(201).json(user);
+
     	 return res.redirect('/login')
 	} catch (err){
 		console.log(err)
@@ -105,7 +110,7 @@ app.post("/login", async (req, res) => {
 		 // Validate if user exist in our database
     	const user = await User.findOne({ username: playername });
 		 // user
-      return res.redirect('/home');
+      return res.redirect('/home/'+ playername);
 	}
 	catch (err){
 		console.log(err)
@@ -117,7 +122,7 @@ app.post("/login", async (req, res) => {
 
 app.get('/game/:room' , (req,res) =>{
   console.log("inside server Game: ", req.params.room)
-  res.render('gamepage', {room : req.params.room})
+  res.render('gamepage', {room : req.params.room, user: req.params.username})
 })
 
 app.get('/leaderboard', async (req,res) =>{

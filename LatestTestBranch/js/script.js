@@ -1,3 +1,5 @@
+require("./config/database").connect();
+
 $(function(){
 	const socket = io();
 
@@ -11,7 +13,7 @@ $(function(){
         'yt': "Your turn",
         'nyt': "Waiting for opponent",
         'popover_h2': "Waiting for opponent",
-        'popover_p': "Give the url to a friend to play a game",
+        // 'popover_p': "Give the url to a friend to play a game",
         'popover_h2_win': "You won the game!",
         'popover_p_win': "Give the url to a friend to play another game",
         'popover_h2_lose': "You lost the game..",
@@ -66,9 +68,9 @@ $(function(){
 
 	function init(){
 		socket.emit('join', {room: room});
-		$('.popover input').val(window.location.href);
+		// $('.popover input').val(window.location.href);
 		$('.popover h2').html(text.popover_h2);
-		$('.popover p').html(text.popover_p);
+		// $('.popover p').html(text.popover_p);
 		$('.status').html('');
 	}
     // socket.emit('test', "sending this test message please work")

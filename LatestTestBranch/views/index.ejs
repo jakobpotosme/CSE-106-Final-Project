@@ -2,7 +2,12 @@
 <html lang="en">
 
 <head>
-
+    <script>
+        document.querySelector('form').onsubmit = function () {
+            this.setAttribute('action', "/game/" + document.querySelector('input[name=join]').value)
+        }
+    </script>
+    <link rel="stylesheet" href="/css/style3.css">
 </head>
 
 <body>
@@ -11,12 +16,23 @@
 
 
     <form action="/game/<%= num %>" method="get">
+        <input type="hidden" value="<%= username %>" name="username">
         <button value="<%= num %>">Play Game</button>
+        <br>
+        <!-- <input type="text" name="join"> -->
+        <button type="submit" value="submit">Join Room</button>
     </form>
+
+    <!-- <form action="/game/<int: >">
+        <input type="text" name="join">
+        <button type="submit" value="submit">Join Room</button>
+    </form> -->
 
     <form action="/leaderboard" method="get">
         <button>Leaderboard</button>
     </form>
+
+
 
 </body>
 <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
