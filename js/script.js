@@ -139,6 +139,7 @@ $(function(){
 		if(data.winner.winner == player.pid){
 			$('.popover h2').html(text.popover_h2_win);
 			$('.popover p').html(text.popover_p_win);
+			$('.popover button');
 			console.log("The winner is:", user)
 			socket.emit('winningperson', user)
 		}else{
