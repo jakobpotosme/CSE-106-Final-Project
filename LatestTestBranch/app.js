@@ -27,12 +27,26 @@ function getRandomInt() {
 }
 
 var rooms = []
+var currentUser
 
 app.get('/home/:playername', (req, res) => {
   // res.send('Hello World!')
 //   console.log("here: "+req.params.playername)
   username = req.params.playername
+  currentUser = username
   num = getRandomInt()
+
+//   User.updateOne({currentUser} ,{ $inc:{wins: 1}}, function(err, result){
+// 			if (err) {
+// 			console.log(err);
+// 		} else {
+// 			console.log(result)
+// 		// users = result
+// 		// console.log(users)
+// 			// console.log(result)
+// 			// res.render('leaderboard', {Users : result})
+// 		}
+// 	})
 
   res.render('index',{num : num, username: username})
 })
@@ -203,7 +217,7 @@ io.on('connection', function(socket) {
 						[0,0,0,0,0,0,0]]
 			};
 			rooms.push(data.room.room);
-			socket.emit('assign', {pid: socket.pid});
+			socket.emit('assign', {pid: socket.pid, currentUser: currentUser});
        }
    })
 
@@ -236,6 +250,22 @@ io.on('connection', function(socket) {
 			socket.broadcast.to(socket.room).emit('opponent_move', {col: data.col});
 		})
     
+
+	socket.on('winningperson', function(data){
+		console.log("Inside winning person: ", data)
+		
+		User.updateOne({currentUser} ,{ $inc:{wins: 1}}, function(err, result){
+			if (err) {
+			console.log(err);
+			} else {
+				console.log(result)
+			
+			}
+		})
+		
+		
+	})
+
     socket.on('disconnect', function () {
 			if(socket.room in game_logic.games){
 				delete game_logic.games[socket.room];

@@ -1,6 +1,5 @@
-require("./config/database").connect();
-
 $(function(){
+
 	const socket = io();
 
     player = {},
@@ -8,7 +7,7 @@ $(function(){
     oc = $('.opponent_color'),
     your_turn = false,
     room = $('#room').data()
-
+	var user;
     var text = {
         'yt': "Your turn",
         'nyt': "Waiting for opponent",
@@ -96,8 +95,9 @@ $(function(){
 
 	socket.on('assign', function(data) {
 		player.pid = data.pid;
-        
+        user = data.currentUser
         console.log("In Assign pid is: ", player.pid)
+        console.log("In Assign username is: ", data.currentUser)
 		if(player.pid == "1"){
 			yc.addClass('red');
 			oc.addClass('yellow');
@@ -139,6 +139,8 @@ $(function(){
 		if(data.winner.winner == player.pid){
 			$('.popover h2').html(text.popover_h2_win);
 			$('.popover p').html(text.popover_p_win);
+			console.log(user)
+			socket.emit('winningperson', user)
 		}else{
 			$('.popover h2').html(text.popover_h2_lose);
 			$('.popover p').html(text.popover_p_lose);
