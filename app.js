@@ -189,8 +189,8 @@ io.on('connection', function(socket) {
            if(typeof game.player2 != 'undefined'){
                return;
            }
-           console.log('???????????????????')
-           console.log(game)
+           
+        //    console.log(game)
            
            io.to(data.room.room).emit('roomtest', 'roooooooooooooom')
 
@@ -204,7 +204,7 @@ io.on('connection', function(socket) {
 			game.player1.opponent = socket;
 			socket.emit('assign', {pid: socket.pid});
 			game.turn = 1;
-            console.log(data.room.room)
+            // console.log(data.room.room)
 			socket.broadcast.to(data.room.room).emit('start');
        }
        else{
