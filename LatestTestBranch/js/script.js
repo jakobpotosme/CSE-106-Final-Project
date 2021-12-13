@@ -128,7 +128,7 @@ $(function(){
 
 	socket.on('winner', function(data) {
         // alert('WE HAVE A WINNER!')
-        console.log('WE HAVE A WINNER')
+        // console.log('WE HAVE A WINNER')
 		oc.removeClass('show');
 		yc.removeClass('show');
 		change_turn(false);
@@ -139,7 +139,7 @@ $(function(){
 		if(data.winner.winner == player.pid){
 			$('.popover h2').html(text.popover_h2_win);
 			$('.popover p').html(text.popover_p_win);
-			console.log(user)
+			console.log("The winner is:", user)
 			socket.emit('winningperson', user)
 		}else{
 			$('.popover h2').html(text.popover_h2_lose);

@@ -1,12 +1,14 @@
 body {
-    background: #f2f2f2;
+    /* background: #f2f2f2; */
+    background-color: SteelBlue;
     font-family: arial;
 }
 
 .board {
     width: 700px;
     height: 600px;
-    background: #00658F;
+    background: #f2f2f2;
+    /* background: #004f8f; */
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -70,14 +72,34 @@ body {
     height: 100%;
     position: absolute;
     z-index: 10;
+    /* border-style: solid; */
 }
+
+/* #col_1{
+     border-style: solid;
+} */
 
 .cols>.col {
     position: relative;
     float: left;
-    width: 100px;
-    height: 100%;
+    width: 92.5px;
+    height: 99%;
+    /* border-style: solid;
+    border-color: #080808; */
 }
+
+.container{
+    justify-content: center;
+    align-items: center;
+}
+/* .cell {
+    align-items: center;
+    background: #4370F1;
+    display: flex;
+    height: 100px;
+    justify-content: center;
+    width: 100px;
+} */
 
 @-moz-keyframes blink {
     0% {
@@ -159,11 +181,11 @@ body {
 }
 
 .red {
-    background: #e61;
+    background: #ed2939;
 }
 
 .yellow {
-    background: #0ba;
+    background: #ffe135;
 }
 
 .hidden {

@@ -4,6 +4,7 @@ const express = require('express');
 var bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const { emit } = require('process');
+const bcrypt = require('bcryptjs')
 var game_logic = require('./game_logic');
 const app = express()
 const http = require('http').Server(app);
@@ -34,19 +35,18 @@ app.get('/home/:playername', (req, res) => {
 //   console.log("here: "+req.params.playername)
   username = req.params.playername
   currentUser = username
+  console.log(currentUser)
+
   num = getRandomInt()
 
-//   User.updateOne({currentUser} ,{ $inc:{wins: 1}}, function(err, result){
+//   User.updateOne({"username":currentUser}, {$inc :{"wins": 1}}, function(err, result){
 // 			if (err) {
 // 			console.log(err);
-// 		} else {
-// 			console.log(result)
-// 		// users = result
-// 		// console.log(users)
-// 			// console.log(result)
-// 			// res.render('leaderboard', {Users : result})
-// 		}
-// 	})
+// 			} else {
+// 				console.log(result)
+// 			}
+// 		})
+
 
   res.render('index',{num : num, username: username})
 })
@@ -85,17 +85,19 @@ app.post("/register", async  (req, res) => {
 			return res.status(409).send("User Already Exist. Please Login");
 		}
 
+		encryptedUserPassword = await bcrypt.hash(req.body.password, 10);
 		// Create user in our database
     const user = await User.create({
 		name: req.body.firstname,
-		username: req.body.playername, // sanitize
-		password: req.body.password,
+		username: req.body.playername.toLowerCase(), // sanitize
+		// password: encryptedUserPassword,
+		password: encryptedUserPassword,
 		wins:0
 		});
 		// return new user
     	// res.status(201).json(user);
 
-    	 return res.redirect('/login')
+    	 return res.redirect('/')
 	} catch (err){
 		console.log(err)
 	}
@@ -105,7 +107,7 @@ app.post("/register", async  (req, res) => {
 
 // Login
 
-app.get("/login", (req, res) => {
+app.get("/", (req, res) => {
 
 	res.render('login')
 });
@@ -137,6 +139,11 @@ app.post("/login", async (req, res) => {
 app.get('/game/:room' , (req,res) =>{
   console.log("inside server Game: ", req.params.room)
   res.render('gamepage', {room : req.params.room, user: req.params.username})
+})
+
+app.post('/game', (req,res) =>{
+  console.log("inside server Game: ", req.body)
+  res.render('gamepage', {room : req.body.join, user: req.body.username})
 })
 
 app.get('/leaderboard', async (req,res) =>{
@@ -253,13 +260,12 @@ io.on('connection', function(socket) {
 
 	socket.on('winningperson', function(data){
 		console.log("Inside winning person: ", data)
-		
-		User.updateOne({currentUser} ,{ $inc:{wins: 1}}, function(err, result){
+		console.log(data)
+		  User.updateOne({"username":data}, {$inc :{"wins": 1}}, function(err, result){
 			if (err) {
 			console.log(err);
 			} else {
 				console.log(result)
-			
 			}
 		})
 		
@@ -280,6 +286,10 @@ io.on('connection', function(socket) {
 
 });
 
-http.listen(3000, function() {
+let port = process.env.PORT;
+if(port == null || port ==""){
+	port = 3000;
+}
+http.listen(port, function() {
    console.log('listening on *:3000');
 });

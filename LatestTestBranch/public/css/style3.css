@@ -10,7 +10,7 @@ body {
     background-color: azure;
 }
 
-button {
+/* button {
     background-color: SteelBlue;
     color: white;
     padding: 14px 20px;
@@ -23,13 +23,51 @@ button {
     font-family: 'Abril Fatface';
     font-size: 20px;
 
+} */
+
+.container{
+    position: relative;
+}
+
+/* .testing{
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+} */
+button{
+    background-color: SteelBlue;
+    color: white;
+    font-family: 'Abril Fatface';
+    font-size: 20px;
+     padding: 20px;
+     border-radius: 5px;
+     display: block;
+     /* edited */
+     border: none;
+     text-decoration: none;
+     cursor: pointer;
+     width: 30%;
+     transition: all 0.3s ease 50ms;
+     text-align: center;
+     max-width: 400px;
+     margin: 0 auto 15px auto;
+     /* new */
+}
+
+.input{
+   display: block;
+   margin: 0 auto;
+   /* float: right; */
 }
 
 button:hover {
     opacity: 0.8;
 }
 
-#Stats {
+/* #Stats {
     line-height: 12px;
     width: 30%;
     margin-top: 10px;
@@ -40,4 +78,4 @@ button:hover {
     font-family: 'Abril Fatface';
     font-size: 20px;
 
-}
+} */
