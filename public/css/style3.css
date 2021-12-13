@@ -1,0 +1,81 @@
+h1 {
+    margin-botton: 1cm;
+    align-item: center;
+    text-align: center;
+    font-size: 45px;
+    font-family: 'Abril Fatface';
+}
+
+body {
+    background-color: azure;
+}
+
+/* button {
+    background-color: SteelBlue;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+    position: relative;
+    top: 70px;
+    font-family: 'Abril Fatface';
+    font-size: 20px;
+
+} */
+
+.container {
+    position: relative;
+}
+
+/* .testing{
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+} */
+button {
+    background-color: SteelBlue;
+    color: white;
+    font-family: 'Abril Fatface';
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    display: block;
+    /* edited */
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    width: 30%;
+    transition: all 0.3s ease 50ms;
+    text-align: center;
+    max-width: 400px;
+    margin: 0 auto 15px auto;
+    /* new */
+}
+
+.input {
+    display: block;
+    margin: 0 auto;
+    /* float: right; */
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/* #Stats {
+    line-height: 12px;
+    width: 30%;
+    margin-top: 10px;
+    margin-left: 2px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: 'Abril Fatface';
+    font-size: 20px;
+
+} */
